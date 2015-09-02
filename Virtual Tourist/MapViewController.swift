@@ -15,6 +15,7 @@ class MapViewController: UIViewController {
     @IBOutlet weak var mapView: MKMapView!
     
     
+
     // MARK: - Life Cycle
     
     
@@ -56,6 +57,7 @@ class MapViewController: UIViewController {
             self.mapView.addAnnotation(annotation)
         }
     }
+    
     
     // MARK: - Save the zoom level helpers
     
@@ -133,9 +135,9 @@ class MapViewController: UIViewController {
             if pinView == nil {
                 pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
                 pinView!.animatesDrop = true
-                pinView!.canShowCallout = true
+                // pinView!.canShowCallout = true
                 pinView!.pinColor = .Green
-                pinView!.rightCalloutAccessoryView = UIButton.buttonWithType(.DetailDisclosure) as! UIButton
+                // pinView!.rightCalloutAccessoryView = UIButton.buttonWithType(.DetailDisclosure) as! UIButton
             }
             else {
                 pinView!.annotation = annotation
@@ -144,15 +146,41 @@ class MapViewController: UIViewController {
             return pinView
         }
         
+        func mapView(mapView: MKMapView!, didSelectAnnotationView view: MKAnnotationView!) {
+            mapView.deselectAnnotation(view.annotation, animated: false)
+            println("pin clicked")
+            
+            
+                // Instantiate the ViewController Screen Using Storyboard ID
+                let pictureCollectionViewController = storyboard!.instantiateViewControllerWithIdentifier("showpictures") as! PictureCollectionViewController
+                pictureCollectionViewController.msgText = "Yes from me"
+                
+                // Create a UINavigationController object and push the "nextScreenViewController"
+                let nextScreenNavigationController = UINavigationController()
+                
+                // Push on stack
+                nextScreenNavigationController.pushViewController(pictureCollectionViewController, animated: false)
+                
+                // present the navigation View Controller
+                presentViewController(nextScreenNavigationController, animated: true, completion: nil)
+                
+
+            
+           // view.annotation
+            //let pin = view.annotation as! Pin
+            //performSegueWithIdentifier("showAlbum", sender: view.annotation)
+        }
+        
         
         // Responds to taps. It opens the system browser to the URL specified in the annotationViews subtitle property.
-        func mapView(mapView: MKMapView!, annotationView: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-            
-            if control == annotationView.rightCalloutAccessoryView {
-                let app = UIApplication.sharedApplication()
-                app.openURL(NSURL(string: annotationView.annotation.subtitle!)!)
-            }
-        }
+        //        func mapView(mapView: MKMapView!, annotationView: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        //
+        //            if control == annotationView.rightCalloutAccessoryView {
+        //                let app = UIApplication.sharedApplication()
+        //                app.openURL(NSURL(string: annotationView.annotation.subtitle!)!)
+        //            }
+        //        }
+        //
         
 
     

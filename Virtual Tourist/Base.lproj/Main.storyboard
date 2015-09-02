@@ -46,7 +46,36 @@
                     </connections>
                 </pongPressGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="679" y="585"/>
+            <point key="canvasLocation" x="-61" y="579"/>
+        </scene>
+        <!--Picture Collection View Controller-->
+        <scene sceneID="e2r-CI-9TH">
+            <objects>
+                <viewController storyboardIdentifier="showpictures" id="JyJ-Al-JgM" customClass="PictureCollectionViewController" customModule="Virtual_Tourist" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="CkF-0v-BPM"/>
+                        <viewControllerLayoutGuide type="bottom" id="Kj9-fa-yJc"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="kmN-2x-Gr3">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1eE-Ie-xuk">
+                                <rect key="frame" x="16" y="68" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <outlet property="messageLabel" destination="1eE-Ie-xuk" id="WvM-Nm-o4T"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AaG-Az-TMb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="369" y="584"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="0yC-Sl-xta">
@@ -64,7 +93,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fPY-Jg-tsh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="147" y="585"/>
+            <point key="canvasLocation" x="-494" y="579"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

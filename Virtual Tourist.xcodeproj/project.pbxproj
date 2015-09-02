@@ -14,6 +14,8 @@
 		4604FD461B977D41005E30FF /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4604FD441B977D41005E30FF /* LaunchScreen.xib */; };
 		4604FD521B977D41005E30FF /* Virtual_TouristTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4604FD511B977D41005E30FF /* Virtual_TouristTests.swift */; };
 		4604FD5C1B977F8B005E30FF /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4604FD5B1B977F8B005E30FF /* MapKit.framework */; };
+		4604FD601B97A6F5005E30FF /* OldPictureCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4604FD5F1B97A6F5005E30FF /* OldPictureCollectionViewController.swift */; };
+		4604FD621B97A848005E30FF /* PictureCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4604FD611B97A848005E30FF /* PictureCollectionViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +40,8 @@
 		4604FD501B977D41005E30FF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4604FD511B977D41005E30FF /* Virtual_TouristTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Virtual_TouristTests.swift; sourceTree = "<group>"; };
 		4604FD5B1B977F8B005E30FF /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		4604FD5F1B97A6F5005E30FF /* OldPictureCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OldPictureCollectionViewController.swift; sourceTree = "<group>"; };
+		4604FD611B97A848005E30FF /* PictureCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PictureCollectionViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +88,8 @@
 				4604FD3B1B977D41005E30FF /* AppDelegate.swift */,
 				4604FD3D1B977D41005E30FF /* MapViewController.swift */,
 				4604FD3F1B977D41005E30FF /* Main.storyboard */,
+				4604FD611B97A848005E30FF /* PictureCollectionViewController.swift */,
+				4604FD5F1B97A6F5005E30FF /* OldPictureCollectionViewController.swift */,
 				4604FD421B977D41005E30FF /* Images.xcassets */,
 				4604FD441B977D41005E30FF /* LaunchScreen.xib */,
 				4604FD391B977D41005E30FF /* Supporting Files */,
@@ -221,8 +227,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4604FD601B97A6F5005E30FF /* OldPictureCollectionViewController.swift in Sources */,
 				4604FD3E1B977D41005E30FF /* MapViewController.swift in Sources */,
 				4604FD3C1B977D41005E30FF /* AppDelegate.swift in Sources */,
+				4604FD621B97A848005E30FF /* PictureCollectionViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
