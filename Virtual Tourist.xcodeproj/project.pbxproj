@@ -8,11 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		4604FD3C1B977D41005E30FF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4604FD3B1B977D41005E30FF /* AppDelegate.swift */; };
-		4604FD3E1B977D41005E30FF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4604FD3D1B977D41005E30FF /* ViewController.swift */; };
+		4604FD3E1B977D41005E30FF /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4604FD3D1B977D41005E30FF /* MapViewController.swift */; };
 		4604FD411B977D41005E30FF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4604FD3F1B977D41005E30FF /* Main.storyboard */; };
 		4604FD431B977D41005E30FF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4604FD421B977D41005E30FF /* Images.xcassets */; };
 		4604FD461B977D41005E30FF /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4604FD441B977D41005E30FF /* LaunchScreen.xib */; };
 		4604FD521B977D41005E30FF /* Virtual_TouristTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4604FD511B977D41005E30FF /* Virtual_TouristTests.swift */; };
+		4604FD5C1B977F8B005E30FF /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4604FD5B1B977F8B005E30FF /* MapKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,13 +30,14 @@
 		4604FD361B977D41005E30FF /* Virtual Tourist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Virtual Tourist.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4604FD3A1B977D41005E30FF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4604FD3B1B977D41005E30FF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		4604FD3D1B977D41005E30FF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		4604FD3D1B977D41005E30FF /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		4604FD401B977D41005E30FF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		4604FD421B977D41005E30FF /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		4604FD451B977D41005E30FF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		4604FD4B1B977D41005E30FF /* Virtual TouristTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Virtual TouristTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4604FD501B977D41005E30FF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4604FD511B977D41005E30FF /* Virtual_TouristTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Virtual_TouristTests.swift; sourceTree = "<group>"; };
+		4604FD5B1B977F8B005E30FF /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,6 +45,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4604FD5C1B977F8B005E30FF /* MapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -59,6 +62,7 @@
 		4604FD2D1B977D41005E30FF = {
 			isa = PBXGroup;
 			children = (
+				4604FD5B1B977F8B005E30FF /* MapKit.framework */,
 				4604FD381B977D41005E30FF /* Virtual Tourist */,
 				4604FD4E1B977D41005E30FF /* Virtual TouristTests */,
 				4604FD371B977D41005E30FF /* Products */,
@@ -78,7 +82,7 @@
 			isa = PBXGroup;
 			children = (
 				4604FD3B1B977D41005E30FF /* AppDelegate.swift */,
-				4604FD3D1B977D41005E30FF /* ViewController.swift */,
+				4604FD3D1B977D41005E30FF /* MapViewController.swift */,
 				4604FD3F1B977D41005E30FF /* Main.storyboard */,
 				4604FD421B977D41005E30FF /* Images.xcassets */,
 				4604FD441B977D41005E30FF /* LaunchScreen.xib */,
@@ -161,6 +165,11 @@
 				TargetAttributes = {
 					4604FD351B977D41005E30FF = {
 						CreatedOnToolsVersion = 6.4;
+						SystemCapabilities = {
+							com.apple.Maps.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 					4604FD4A1B977D41005E30FF = {
 						CreatedOnToolsVersion = 6.4;
@@ -212,7 +221,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4604FD3E1B977D41005E30FF /* ViewController.swift in Sources */,
+				4604FD3E1B977D41005E30FF /* MapViewController.swift in Sources */,
 				4604FD3C1B977D41005E30FF /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
