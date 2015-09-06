@@ -11,13 +11,23 @@ import MapKit
 
 class MapViewController: UIViewController {
 
+    // MARK: - Variables
     
+    var pin: MKAnnotationView!
+
+        
+    // A filepath property
+    var filePath : String {
+        let manager = NSFileManager.defaultManager()
+        let url = manager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first as! NSURL
+        return url.URLByAppendingPathComponent("mapRegionArchive").path!
+    }
+    
+    // MARK: - Screen Outlets
     @IBOutlet weak var mapView: MKMapView!
     
     
-
     // MARK: - Life Cycle
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,12 +36,12 @@ class MapViewController: UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController!.navigationBarHidden = true
+       // navigationController!.navigationBarHidden = true
     }
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
-        navigationController!.navigationBarHidden = false
+        // navigationController!.navigationBarHidden = false
     }
     
     override func didReceiveMemoryWarning() {
@@ -39,6 +49,8 @@ class MapViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
+    
+    // MARK: - Screen Actions
 
     @IBAction func addPin(sender: UILongPressGestureRecognizer) {
         
@@ -59,16 +71,43 @@ class MapViewController: UIViewController {
     }
     
     
-    // MARK: - Save the zoom level helpers
+    // MARK: - What to do result of getting photos
     
-    
-    // A convenient property
-    var filePath : String {
-        let manager = NSFileManager.defaultManager()
-        let url = manager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first as! NSURL
-        return url.URLByAppendingPathComponent("mapRegionArchive").path!
+    func gotoNextScreen() {
+        // Instantiate the ViewController Screen Using Storyboard ID
+        let pictureCollectionViewController = storyboard!.instantiateViewControllerWithIdentifier("showpictures") as! PictureCollectionViewController
+        pictureCollectionViewController.pin = pin
+        
+        // Create a UINavigationController object and push the "nextScreenViewController"
+        let nextScreenNavigationController = UINavigationController()
+        
+        // Push on stack
+        nextScreenNavigationController.pushViewController(pictureCollectionViewController, animated: false)
+        
+        // present the navigation View Controller
+        presentViewController(nextScreenNavigationController, animated: true, completion: nil)
+        
+        // view.annotation
+        //let pin = view.annotation as! Pin
+        //performSegueWithIdentifier("showAlbum", sender: view.annotation)
     }
     
+    func displayError(errorString: String?) {
+        if let errorString = errorString {
+            dispatch_async(dispatch_get_main_queue()) {
+                let alertController = UIAlertController(title: "Error", message: errorString, preferredStyle: .Alert)
+                let action = UIAlertAction(title: "Done", style: UIAlertActionStyle.Default, handler: {(paramAction:UIAlertAction!) in println("The Done button was tapped - " + paramAction.title)})
+                
+                alertController.addAction(action)
+                
+                self.presentViewController(alertController, animated: true, completion: nil)
+                
+            }
+        }
+    }
+    
+    
+    // MARK: - Save and Restore the map focus and region
     
     // This gets fired off when the focus or region of the map changes
     func saveMapRegion() {
@@ -109,6 +148,8 @@ class MapViewController: UIViewController {
             println("lat: \(latitude), lon: \(longitude), latD: \(latitudeDelta), lonD: \(longitudeDelta)")
             
             mapView.setRegion(savedRegion, animated: animated)
+            
+
         }
     }
     
@@ -121,11 +162,14 @@ class MapViewController: UIViewController {
     
     extension MapViewController : MKMapViewDelegate {
         
+        // MARK: - Extension to conform to MapViewDelegate
+        
+        // save the map info when user changes it
         func mapView(mapView: MKMapView!, regionDidChangeAnimated animated: Bool) {
             saveMapRegion()
         }
         
-        // Setup the pins on the map
+        // Customize the pin going on to the map
         func mapView(mapView: MKMapView!, viewForAnnotation annotation: MKAnnotation!) -> MKAnnotationView! {
             
             let reuseId = "pin"
@@ -142,45 +186,39 @@ class MapViewController: UIViewController {
             else {
                 pinView!.annotation = annotation
             }
+            var newPin = Pin(latitude: annotation.coordinate.latitude, longitude: annotation.coordinate.longitude)
             println("did a pin")
             return pinView
         }
         
+        // React to a pin click
         func mapView(mapView: MKMapView!, didSelectAnnotationView view: MKAnnotationView!) {
             mapView.deselectAnnotation(view.annotation, animated: false)
-            println("pin clicked")
+            println("pin clicked \(view.annotation.coordinate.latitude)")
             
             
-                // Instantiate the ViewController Screen Using Storyboard ID
-                let pictureCollectionViewController = storyboard!.instantiateViewControllerWithIdentifier("showpictures") as! PictureCollectionViewController
-                pictureCollectionViewController.msgText = "Yes from me"
-                
-                // Create a UINavigationController object and push the "nextScreenViewController"
-                let nextScreenNavigationController = UINavigationController()
-                
-                // Push on stack
-                nextScreenNavigationController.pushViewController(pictureCollectionViewController, animated: false)
-                
-                // present the navigation View Controller
-                presentViewController(nextScreenNavigationController, animated: true, completion: nil)
-                
-
+            Flickr.oneSession.latitude  = view.annotation.coordinate.latitude
+            Flickr.oneSession.longitude = view.annotation.coordinate.longitude
             
-           // view.annotation
-            //let pin = view.annotation as! Pin
-            //performSegueWithIdentifier("showAlbum", sender: view.annotation)
+            pin = view
+            
+            Flickr.oneSession.getImageFromFlickr(){ (success, errorString) in
+                if success {
+                    self.gotoNextScreen()
+                } else {
+                    self.displayError(errorString)
+                }
+            }
         }
+
         
+        override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+           //     var vc = segue.destinationViewController.childViewControllers[0] as! AlbumViewController
+            //    vc.pin = sender as! Pin
+                println("in prepare for seg")
+            }
         
-        // Responds to taps. It opens the system browser to the URL specified in the annotationViews subtitle property.
-        //        func mapView(mapView: MKMapView!, annotationView: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        //
-        //            if control == annotationView.rightCalloutAccessoryView {
-        //                let app = UIApplication.sharedApplication()
-        //                app.openURL(NSURL(string: annotationView.annotation.subtitle!)!)
-        //            }
-        //        }
-        //
+
         
 
     
