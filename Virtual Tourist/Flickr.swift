@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import CoreData
 
 
 let BASE_URL = "https://api.flickr.com/services/rest/"
@@ -34,7 +35,15 @@ class Flickr {
     
     var listofPhotos = [Photo]()
     
-    func getImageFromFlickr(completionHandler: (success: Bool, errorString: String) -> Void) {
+    // MARK: - Core Data Convenience. This will be useful for fetching. And for adding and saving objects as well.
+    
+    var sharedContext: NSManagedObjectContext {
+        return CoreDataStackManager.sharedInstance().managedObjectContext!
+    }
+
+    
+    
+    func getImageFromFlickr(pin: Pin, completionHandler: ( success: Bool, errorString: String) -> Void) {
         
         /* 2 - API method arguments */
         let methodArguments = [
@@ -63,27 +72,29 @@ class Flickr {
                 
                 if let photosDictionary = parsedResult.valueForKey("photos") as? NSDictionary {
                     if let photoArray = photosDictionary.valueForKey("photo") as? [[String: AnyObject]] {
-                        var x = 0
+                        var numOfPicsCntr = 0
                         // TODO: - Need to release the phot objects when deleting the array
                         self.listofPhotos.removeAll(keepCapacity: false)
                         for photoDictionary in photoArray {
-                            x++
-                            if x > 12 {
+                            numOfPicsCntr++
+                            if numOfPicsCntr > 26 {
                                 break
                             }
-                            println("the dict \(photoDictionary)")
-                            println(photoDictionary["title"] as? String)
-                            println(photoDictionary["url_m"] as? String)
-                            println(photoDictionary["id"] as? String)
-                            var newPhoto = Photo(photoDictionary: photoDictionary)
+//                            println("the dict \(photoDictionary)")
+//                            println(photoDictionary["title"] as? String)
+//                            println(photoDictionary["url_m"] as? String)
+//                            println(photoDictionary["id"] as? String)
+                            var newPhoto = Photo(photoDictionary: photoDictionary, context: self.sharedContext)
                             
                             let imageURL = NSURL(string: (photoDictionary["url_m"] as? String)!)
                             if let imageData = NSData(contentsOfURL: imageURL!) {
                                 newPhoto.photoImage = UIImage(data: imageData)
                             }
-
+                            newPhoto.pin = pin
                             self.listofPhotos.append(newPhoto)
+                            CoreDataStackManager.sharedInstance().saveContext()
                         }
+                        
                         completionHandler(success: true, errorString: "everything good" )
                         // TODO: - Need to clean up the code
 

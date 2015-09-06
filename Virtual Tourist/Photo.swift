@@ -8,15 +8,34 @@
 
 import UIKit
 import Foundation
+import CoreData
 
-class Photo {
-    var title: String
-    var url: String
-    var id: String
+@objc(Photo)
+
+class Photo: NSManagedObject {
+    @NSManaged var title: String
+    @NSManaged var url: String
+    @NSManaged var id: String
+    
+    
+    /// The associated pin
+    @NSManaged var pin: Pin?
+    
+
 
     // var img : UIImage!  not sure maybe this should be a calculated field
     
-    init( photoDictionary:[String: AnyObject]) {
+    // 5. Include this standard Core Data init method.
+    override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
+        super.init(entity: entity, insertIntoManagedObjectContext: context)
+    }
+    
+    init( photoDictionary:[String: AnyObject], context: NSManagedObjectContext) {
+        // Core Data
+        let entity =  NSEntityDescription.entityForName("Photo", inManagedObjectContext: context)!
+        super.init(entity: entity, insertIntoManagedObjectContext: context)
+        
+
         self.title = photoDictionary["title"] as! String
         self.url =  photoDictionary["url_m"] as! String
         self.id = photoDictionary["id"] as! String

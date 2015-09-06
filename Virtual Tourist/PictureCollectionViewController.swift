@@ -8,13 +8,13 @@
 
 import UIKit
 import MapKit
+import CoreData
 
 class PictureCollectionViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate  {
 
     
-    
     var pin: MKAnnotationView!
-
+    var currentPin: Pin!
     
     // A filepath property
     var filePath : String {
@@ -22,21 +22,33 @@ class PictureCollectionViewController: UIViewController, UICollectionViewDataSou
         let url = manager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first as! NSURL
         return url.URLByAppendingPathComponent("mapRegionArchive").path!
     }
+    // shared context property
+    lazy var sharedContext: NSManagedObjectContext =  {
+        return CoreDataStackManager.sharedInstance().managedObjectContext!
+        }()
     
     
+    // MARK: - Screen Outlets
+
     @IBOutlet weak var messageLabel: UILabel!
-    
     
     @IBOutlet weak var mapView: MKMapView!
     
+    
+    // MARK: - Screen Actions
     
     @IBAction func button(sender: AnyObject) {
         
         // theImage.image = UIImage(named: "zxc")
     }
+
+    
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         println("this is from pin \(pin.annotation.coordinate.latitude)")
+        println("this is from currnt pin number of photos \(currentPin.photos.count)")
+        println("this is from current pin latitude \(currentPin.latitude)")
 
         restoreMapRegion(false)
 
@@ -46,7 +58,7 @@ class PictureCollectionViewController: UIViewController, UICollectionViewDataSou
        // Flickr.oneSession.latitude  = 27.9881
        // Flickr.oneSession.longitude = 86.9253
        // Flickr.oneSession.getImageFromFlickr()
-        println("number of photos \(Flickr.oneSession.listofPhotos.count)")
+        //println("number of photos \(Flickr.oneSession.listofPhotos.count)")
 
         
     }
@@ -56,6 +68,15 @@ class PictureCollectionViewController: UIViewController, UICollectionViewDataSou
         // Dispose of any resources that can be recreated.
     }
     
+    
+    // MARK: - Core Data Convenience
+    
+    func saveContext() {
+        CoreDataStackManager.sharedInstance().saveContext()
+    }
+    
+    
+    // MARK: - Restore Map region
     
     // This gets fired off in viewDidLoad (or maybe When coming in this screen)
     func restoreMapRegion(animated: Bool) {
@@ -94,7 +115,6 @@ class PictureCollectionViewController: UIViewController, UICollectionViewDataSou
 //        }
     }
     
-
     
     func cancelAuth() {
         self.dismissViewControllerAnimated(true, completion: nil)
@@ -102,41 +122,34 @@ class PictureCollectionViewController: UIViewController, UICollectionViewDataSou
     }
 
     
+    // MARK: - CollectionView functions
+    
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return Flickr.oneSession.listofPhotos.count
+        return currentPin.photos.count
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         var cell = collectionView.dequeueReusableCellWithReuseIdentifier("cell", forIndexPath: indexPath) as! UICollectionViewCell
-        var label = cell.viewWithTag(1) as! UILabel
-        label.text = Flickr.oneSession.listofPhotos[indexPath.row].title
+        // var label = cell.viewWithTag(1) as! UILabel
+        //label.text = Flickr.oneSession.listofPhotos[indexPath.row].title
         
         var img = cell.viewWithTag(2) as! UIImageView
-        img.image = Flickr.oneSession.listofPhotos[indexPath.row].photoImage
+        let myPhoto = currentPin.photos[indexPath.row]
+        img.image = myPhoto.photoImage
+
         return cell
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         println("did select this number \(indexPath.row)")
-        Flickr.oneSession.listofPhotos.removeAtIndex(indexPath.row)
+        let myPhoto = currentPin.photos[indexPath.row]
+        myPhoto.pin = nil
         collectionView.deleteItemsAtIndexPaths([indexPath])
+        
+        sharedContext.deleteObject(myPhoto)
+        CoreDataStackManager.sharedInstance().saveContext()
+        
     }
     
-
-    
-    
-    
-    
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
 
