@@ -307,19 +307,20 @@ extension Double {
 
             // save the MKAnnotationView thatwas clicked
             pin = view
+            gotoNextScreen()
             
             // do not get new pictures if there are saved old ones
-            if currentPin.photos.count < 1 {
-                Flickr.oneSession.getImageFromFlickr(currentPin){ (success, errorString) in
-                    if success {
-                        self.gotoNextScreen()
-                    } else {
-                        self.displayError(errorString)
-                    }
-                }
-            } else {
-                gotoNextScreen()
-            }
+//            if currentPin.photos.count < 1 {
+//                Flickr.oneSession.getImageFromFlickr(currentPin){ (success, errorString) in
+//                    if success {
+//                        self.gotoNextScreen()
+//                    } else {
+//                        self.displayError(errorString)
+//                    }
+//                }
+//            } else {
+//                gotoNextScreen()
+//            }
         }
 
         

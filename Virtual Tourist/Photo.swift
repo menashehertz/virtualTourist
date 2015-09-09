@@ -86,6 +86,23 @@ class Photo: NSManagedObject {
         let data = UIImagePNGRepresentation(image!)
         data.writeToFile(path, atomically: true)
     }
+
+    // MARK: - Saving images
+    
+    func deleteImage() {
+        let path = pathForIdentifier(actualFileName)
+        println("the poster path to delete is \(path) ")
+        
+        // And in documents directory
+        let filemgr = NSFileManager.defaultManager()
+        var error: NSError?
+        
+        if filemgr.removeItemAtPath(path, error: &error) {
+            println("Remove successful")
+        } else {
+            println("Remove failed: \(error!.localizedDescription)")
+        }
+    }
     
     // MARK: - Helper
     

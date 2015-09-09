@@ -34,10 +34,33 @@ class PictureCollectionViewController: UIViewController, UICollectionViewDataSou
     
     @IBOutlet weak var mapView: MKMapView!
     
+    @IBOutlet weak var collectionPic: UICollectionView!
     
     // MARK: - Screen Actions
     
     @IBAction func button(sender: AnyObject) {
+        //collectionPic.hidden = true
+        let pinPhotoArray = currentPin.photos
+       
+        for pinPhoto in pinPhotoArray{
+            pinPhoto.pin = nil
+            //collectionView.deleteItemsAtIndexPaths([indexPath])
+            pinPhoto.deleteImage()
+            sharedContext.deleteObject(pinPhoto)
+            CoreDataStackManager.sharedInstance().saveContext()
+        }
+        //collectionPic.hidden = false
+        Flickr.oneSession.getImageFromFlickr(currentPin){ (success, errorString) in
+            if success {
+                println("From button - Got the FlickR data")
+                self.collectionPic.reloadData()
+            } else {
+                println("From button - didn't get FlickR data")
+            }
+        }
+
+        
+        
         
         // theImage.image = UIImage(named: "zxc")
     }
@@ -52,9 +75,25 @@ class PictureCollectionViewController: UIViewController, UICollectionViewDataSou
 
         restoreMapRegion(false)
 
-        self.navigationItem.title = "the pictures"
+        self.navigationItem.title = "Pictures"
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "⬅︎OK", style: .Plain, target: self, action: "cancelAuth")
         
+        
+        
+        // do not get new pictures if there are saved old ones
+        if currentPin.photos.count < 1 {
+            Flickr.oneSession.getImageFromFlickr(currentPin){ (success, errorString) in
+                if success {
+                    println("From button - Got the FlickR data")
+                    dispatch_async(dispatch_get_main_queue()){
+                        self.collectionPic.reloadData()
+                    }
+                } else {
+                    println("From button - didn't get FlickR data")
+                }
+            }
+        }
+
        // Flickr.oneSession.latitude  = 27.9881
        // Flickr.oneSession.longitude = 86.9253
        // Flickr.oneSession.getImageFromFlickr()
@@ -143,8 +182,10 @@ class PictureCollectionViewController: UIViewController, UICollectionViewDataSou
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         println("did select this number \(indexPath.row)")
         let myPhoto = currentPin.photos[indexPath.row]
+
         myPhoto.pin = nil
         collectionView.deleteItemsAtIndexPaths([indexPath])
+        myPhoto.deleteImage()
         
         sharedContext.deleteObject(myPhoto)
         CoreDataStackManager.sharedInstance().saveContext()
