@@ -55,14 +55,16 @@ class PictureCollectionViewController: UIViewController, UICollectionViewDataSou
     
     // MARK: - Screen Outlets
     
-    @IBOutlet weak var activityInd: UIActivityIndicatorView!
-
     @IBOutlet weak var messageLabel: UILabel!
     
     @IBOutlet weak var mapView: MKMapView!
     
     @IBOutlet weak var collectionPic: UICollectionView!
     
+    @IBOutlet weak var loadingLabel: UILabel!
+    
+    @IBOutlet weak var newCollectionBut: UIButton!
+ 
     // MARK: - Screen Actions
     
     @IBAction func button(sender: AnyObject) {
@@ -80,7 +82,9 @@ class PictureCollectionViewController: UIViewController, UICollectionViewDataSou
         Flickr.oneSession.getImageFromFlickr(pin){ (success, errorString) in
             if success {
                 println("From button - Got the FlickR data")
-                self.collectionPic.reloadData()
+                dispatch_async(dispatch_get_main_queue()){
+                    self.collectionPic.reloadData()
+                }
             } else {
                 println("From button - didn't get FlickR data")
             }
@@ -116,6 +120,8 @@ class PictureCollectionViewController: UIViewController, UICollectionViewDataSou
         }
         fetchedResultsController.delegate = self
         
+        self.newCollectionBut.enabled = false
+        
         // activityInd.startAnimating()
 
 
@@ -140,6 +146,9 @@ class PictureCollectionViewController: UIViewController, UICollectionViewDataSou
                     println("From button - Got the FlickR data")
                     dispatch_async(dispatch_get_main_queue()){
                         self.collectionPic.reloadData()
+                        self.loadingLabel.hidden = true
+                        self.newCollectionBut.enabled = true
+                        
                     }
                 } else {
                     println("From button - didn't get FlickR data")

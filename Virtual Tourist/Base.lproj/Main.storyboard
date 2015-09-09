@@ -108,8 +108,8 @@
                             </collectionView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Eka-xE-cqb">
                                 <rect key="frame" x="0.0" y="538" width="320" height="30"/>
-                                <color key="backgroundColor" red="0.5" green="0.23894650849999999" blue="0.1237177667" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="Button">
+                                <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="New Collection">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -122,29 +122,33 @@
                                     <constraint firstAttribute="height" constant="101" id="sbK-qn-vgX"/>
                                 </constraints>
                             </mapView>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="zbz-c2-I2B">
-                                <rect key="frame" x="141" y="266" width="37" height="37"/>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                            </activityIndicatorView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading. . . " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fjj-AX-xEo">
+                                <rect key="frame" x="114.5" y="274" width="91" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="rhw-Xk-sc4" secondAttribute="trailing" constant="-16" id="5VI-iz-kPs"/>
                             <constraint firstItem="Eka-xE-cqb" firstAttribute="leading" secondItem="kmN-2x-Gr3" secondAttribute="leadingMargin" constant="-16" id="6nB-Bq-41y"/>
-                            <constraint firstAttribute="centerX" secondItem="zbz-c2-I2B" secondAttribute="centerX" id="IKF-im-G2e"/>
+                            <constraint firstAttribute="centerY" secondItem="fjj-AX-xEo" secondAttribute="centerY" id="Fgl-SS-HoD"/>
+                            <constraint firstAttribute="centerX" secondItem="fjj-AX-xEo" secondAttribute="centerX" id="FrN-JM-Zdv"/>
                             <constraint firstItem="Kj9-fa-yJc" firstAttribute="top" secondItem="Eka-xE-cqb" secondAttribute="bottom" id="Oxb-RH-oRE"/>
                             <constraint firstItem="p3x-rs-B44" firstAttribute="leading" secondItem="kmN-2x-Gr3" secondAttribute="leadingMargin" constant="-16" id="SCu-Uh-Ngy"/>
                             <constraint firstItem="p3x-rs-B44" firstAttribute="top" secondItem="CkF-0v-BPM" secondAttribute="bottom" constant="8" id="UDa-qs-xqM"/>
                             <constraint firstItem="Eka-xE-cqb" firstAttribute="trailing" secondItem="kmN-2x-Gr3" secondAttribute="trailingMargin" constant="16" id="ZsK-IV-Hd0"/>
                             <constraint firstItem="Eka-xE-cqb" firstAttribute="top" secondItem="rhw-Xk-sc4" secondAttribute="bottom" constant="6" id="afd-kg-KdB"/>
-                            <constraint firstAttribute="centerY" secondItem="zbz-c2-I2B" secondAttribute="centerY" id="bPS-uD-EVj"/>
                             <constraint firstItem="rhw-Xk-sc4" firstAttribute="leading" secondItem="kmN-2x-Gr3" secondAttribute="leadingMargin" constant="-16" id="fVs-cp-vAR"/>
                             <constraint firstAttribute="trailingMargin" secondItem="p3x-rs-B44" secondAttribute="trailing" constant="-16" id="wjR-0F-QRX"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="collectionPic" destination="rhw-Xk-sc4" id="aPK-2P-aCj"/>
+                        <outlet property="loadingLabel" destination="fjj-AX-xEo" id="RNm-vm-ZSM"/>
                         <outlet property="mapView" destination="p3x-rs-B44" id="Rwn-ha-9uf"/>
+                        <outlet property="newCollectionBut" destination="Eka-xE-cqb" id="0YB-SV-kqY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AaG-Az-TMb" userLabel="First Responder" sceneMemberID="firstResponder"/>
