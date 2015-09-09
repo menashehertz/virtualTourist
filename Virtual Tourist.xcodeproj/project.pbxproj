@@ -93,15 +93,14 @@
 		4604FD381B977D41005E30FF /* Virtual Tourist */ = {
 			isa = PBXGroup;
 			children = (
-				46A8A0581B9BD742002C0445 /* CoreDataStackManager.swift */,
 				4604FD3F1B977D41005E30FF /* Main.storyboard */,
+				468EAD101BA09C7300CC1BCA /* CoreData */,
 				4604FD681B97F836005E30FF /* controllers */,
 				4604FD671B97F823005E30FF /* Models */,
 				4604FD3B1B977D41005E30FF /* AppDelegate.swift */,
 				4604FD421B977D41005E30FF /* Images.xcassets */,
 				4604FD441B977D41005E30FF /* LaunchScreen.xib */,
 				4604FD391B977D41005E30FF /* Supporting Files */,
-				46A8A05A1B9BD964002C0445 /* Model.xcdatamodeld */,
 			);
 			path = "Virtual Tourist";
 			sourceTree = "<group>";
@@ -148,6 +147,15 @@
 				4604FD611B97A848005E30FF /* PictureCollectionViewController.swift */,
 			);
 			name = controllers;
+			sourceTree = "<group>";
+		};
+		468EAD101BA09C7300CC1BCA /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				46A8A0581B9BD742002C0445 /* CoreDataStackManager.swift */,
+				46A8A05A1B9BD964002C0445 /* Model.xcdatamodeld */,
+			);
+			name = CoreData;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
