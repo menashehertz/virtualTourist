@@ -54,6 +54,8 @@ class PictureCollectionViewController: UIViewController, UICollectionViewDataSou
 
     
     // MARK: - Screen Outlets
+    
+    @IBOutlet weak var activityInd: UIActivityIndicatorView!
 
     @IBOutlet weak var messageLabel: UILabel!
     
@@ -94,6 +96,8 @@ class PictureCollectionViewController: UIViewController, UICollectionViewDataSou
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
         println("this is from pin \(pinMK.annotation.coordinate.latitude)")
         println("this is from currnt pin number of photos \(pin.photos.count)")
         println("this is from current pin latitude \(pin.latitude)")
@@ -111,6 +115,9 @@ class PictureCollectionViewController: UIViewController, UICollectionViewDataSou
             println("Error performing initial fetch: \(error)")
         }
         fetchedResultsController.delegate = self
+        
+        // activityInd.startAnimating()
+
 
         
         
@@ -125,7 +132,7 @@ class PictureCollectionViewController: UIViewController, UICollectionViewDataSou
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        
+
         // do not get new pictures if there are saved old ones
         if pin.photos.count < 1 {
             Flickr.oneSession.getImageFromFlickr(pin){ (success, errorString) in
@@ -221,11 +228,17 @@ class PictureCollectionViewController: UIViewController, UICollectionViewDataSou
         //label.text = Flickr.oneSession.listofPhotos[indexPath.row].title
         
         var img = cell.viewWithTag(2) as! UIImageView
-        
+        img.image = UIImage(named: "placeHolder")
+
         // Here is how to replace the actors array using objectAtIndexPath
         let myPhoto = fetchedResultsController.objectAtIndexPath(indexPath) as! Photo
         
         img.image = myPhoto.photoImage
+        if myPhoto.photoImage != nil {
+            println("***** the photo not nil")
+        } else {
+            println("----- the photo  nil")           
+        }
 
         return cell
     }

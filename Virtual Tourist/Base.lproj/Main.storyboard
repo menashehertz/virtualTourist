@@ -60,8 +60,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="rhw-Xk-sc4">
-                                <rect key="frame" x="0.0" y="125" width="320" height="413"/>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="rhw-Xk-sc4">
+                                <rect key="frame" x="0.0" y="132" width="320" height="400"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Dby-Ws-chk">
                                     <size key="itemSize" width="100" height="100"/>
@@ -80,10 +80,10 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bg8-Fv-Zta">
                                                     <rect key="frame" x="8" y="8" width="124" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" tag="2" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4MV-7a-y8H">
+                                                <imageView userInteractionEnabled="NO" tag="2" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeHolder" translatesAutoresizingMaskIntoConstraints="NO" id="4MV-7a-y8H">
                                                     <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                                 </imageView>
                                             </subviews>
@@ -118,21 +118,28 @@
                             </button>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="p3x-rs-B44">
                                 <rect key="frame" x="0.0" y="28" width="320" height="101"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="101" id="sbK-qn-vgX"/>
+                                </constraints>
                             </mapView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="zbz-c2-I2B">
+                                <rect key="frame" x="141" y="266" width="37" height="37"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="rhw-Xk-sc4" secondAttribute="trailing" constant="-16" id="5VI-iz-kPs"/>
                             <constraint firstItem="Eka-xE-cqb" firstAttribute="leading" secondItem="kmN-2x-Gr3" secondAttribute="leadingMargin" constant="-16" id="6nB-Bq-41y"/>
-                            <constraint firstItem="rhw-Xk-sc4" firstAttribute="top" secondItem="CkF-0v-BPM" secondAttribute="bottom" constant="105" id="Nid-OZ-Khr"/>
+                            <constraint firstAttribute="centerX" secondItem="zbz-c2-I2B" secondAttribute="centerX" id="IKF-im-G2e"/>
                             <constraint firstItem="Kj9-fa-yJc" firstAttribute="top" secondItem="Eka-xE-cqb" secondAttribute="bottom" id="Oxb-RH-oRE"/>
                             <constraint firstItem="p3x-rs-B44" firstAttribute="leading" secondItem="kmN-2x-Gr3" secondAttribute="leadingMargin" constant="-16" id="SCu-Uh-Ngy"/>
                             <constraint firstItem="p3x-rs-B44" firstAttribute="top" secondItem="CkF-0v-BPM" secondAttribute="bottom" constant="8" id="UDa-qs-xqM"/>
                             <constraint firstItem="Eka-xE-cqb" firstAttribute="trailing" secondItem="kmN-2x-Gr3" secondAttribute="trailingMargin" constant="16" id="ZsK-IV-Hd0"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="rhw-Xk-sc4" secondAttribute="trailing" constant="-16" id="aPt-dv-7yO"/>
-                            <constraint firstItem="rhw-Xk-sc4" firstAttribute="leading" secondItem="kmN-2x-Gr3" secondAttribute="leadingMargin" constant="-16" id="bAc-Vb-W9u"/>
+                            <constraint firstItem="Eka-xE-cqb" firstAttribute="top" secondItem="rhw-Xk-sc4" secondAttribute="bottom" constant="6" id="afd-kg-KdB"/>
+                            <constraint firstAttribute="centerY" secondItem="zbz-c2-I2B" secondAttribute="centerY" id="bPS-uD-EVj"/>
+                            <constraint firstItem="rhw-Xk-sc4" firstAttribute="leading" secondItem="kmN-2x-Gr3" secondAttribute="leadingMargin" constant="-16" id="fVs-cp-vAR"/>
                             <constraint firstAttribute="trailingMargin" secondItem="p3x-rs-B44" secondAttribute="trailing" constant="-16" id="wjR-0F-QRX"/>
-                            <constraint firstItem="rhw-Xk-sc4" firstAttribute="top" secondItem="p3x-rs-B44" secondAttribute="bottom" constant="-4" id="yfy-EX-mnk"/>
-                            <constraint firstItem="Eka-xE-cqb" firstAttribute="top" secondItem="rhw-Xk-sc4" secondAttribute="bottom" id="zXq-hm-3Tl"/>
                         </constraints>
                     </view>
                     <connections>
@@ -145,6 +152,9 @@
             <point key="canvasLocation" x="369" y="584"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="placeHolder" width="120" height="120"/>
+    </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

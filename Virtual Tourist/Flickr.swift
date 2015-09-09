@@ -77,7 +77,7 @@ class Flickr {
                         self.listofPhotos.removeAll(keepCapacity: false)
                         for photoDictionary in photoArray {
                             numOfPicsCntr++
-                            if numOfPicsCntr > 26 {
+                            if numOfPicsCntr > 12 {
                                 break
                             }
 //                            println("the dict \(photoDictionary)")
@@ -92,9 +92,9 @@ class Flickr {
                             }
                             newPhoto.pin = pin
                             self.listofPhotos.append(newPhoto)
-                            CoreDataStackManager.sharedInstance().saveContext()
+                            
                         }
-                        
+                        CoreDataStackManager.sharedInstance().saveContext()
                         completionHandler(success: true, errorString: "everything good" )
                         // TODO: - Need to clean up the code
 
