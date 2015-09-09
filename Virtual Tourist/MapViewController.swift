@@ -152,8 +152,8 @@ class MapViewController: UIViewController {
     func gotoNextScreen() {
         // Instantiate the ViewController Screen Using Storyboard ID
         let pictureCollectionViewController = storyboard!.instantiateViewControllerWithIdentifier("showpictures") as! PictureCollectionViewController
-        pictureCollectionViewController.currentPin = currentPin
-        pictureCollectionViewController.pin = pin
+        pictureCollectionViewController.pin = currentPin
+        pictureCollectionViewController.pinMK = pin
         
         // Create a UINavigationController object and push the "nextScreenViewController"
         let nextScreenNavigationController = UINavigationController()
