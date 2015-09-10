@@ -18,6 +18,7 @@ let EXTRAS = "url_m"
 let SAFE_SEARCH = "1"
 let DATA_FORMAT = "json"
 let NO_JSON_CALLBACK = "1"
+let PER_PAGE = "12"
 let BOUNDING_BOX_HALF_WIDTH = 0.5
 let BOUNDING_BOX_HALF_HEIGHT = 0.5
 let LAT_MIN = -90.0
@@ -49,6 +50,7 @@ class Flickr {
         let methodArguments = [
             "method": METHOD_NAME,
             "api_key": API_KEY,
+            "per_page": PER_PAGE,
             "bbox": createBoundingBoxString(),
             "safe_search": SAFE_SEARCH,
             "extras": EXTRAS,
