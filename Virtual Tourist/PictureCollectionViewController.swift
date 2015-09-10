@@ -243,7 +243,7 @@ class PictureCollectionViewController: UIViewController, UICollectionViewDataSou
 
         let myPhoto = fetchedResultsController.objectAtIndexPath(indexPath) as! Photo
         
-        img.image = myPhoto.photoImage
+        // img.image = myPhoto.photoImage
         if myPhoto.photoImage != nil {
             println("***** the photo not nil")
         } else {
@@ -352,16 +352,45 @@ class PictureCollectionViewController: UIViewController, UICollectionViewDataSou
     func configureCell(cell: UICollectionViewCell, photo: Photo) {
         println("Actual file name \(photo.actualFileName)")
         
+        var img = cell.viewWithTag(2) as! UIImageView
+        
+
+        
         if photo.photoImage != nil {
             println("there is a photo")
+            img.image = photo.photoImage
         } else {
             println("The movie has an image name, but it is not downloaded yet")
+            let sessionConfig = NSURLSessionConfiguration.defaultSessionConfiguration()
+            let session = NSURLSession(configuration: sessionConfig, delegate: nil, delegateQueue: nil)
+            let url = NSURL(string: photo.url)
+            let request = NSMutableURLRequest(URL: url!)
+            request.HTTPMethod = "GET"
+            let task = session.dataTaskWithRequest(request){ (data: NSData!, response: NSURLResponse!, error: NSError!) -> Void in
+                if (error == nil) {
+                    if let response = response as? NSHTTPURLResponse {
+                        // println("response=\(response)")
+                        if response.statusCode == 200 {
+
+                            let photoImage = UIImage(data: data)
+                            img.image = photoImage
+                            dispatch_async(dispatch_get_main_queue()) {
+                                photo.photoImage = photoImage
+                            }
+                         }
+                    }
+                }
+                else {
+                    println("Failure: \(error.localizedDescription)");
+                }
+            }
+            task.resume()
         }
         
         photo.doesItExist()
-        
-    }
-    
+
+        }
     
 }
+
 

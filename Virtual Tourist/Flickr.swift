@@ -90,9 +90,9 @@ class Flickr {
                                 
                                 var newPhoto = Photo(photoDictionary: photoDictionary, context: self.sharedContext)
                                 let imageURL = NSURL(string: (photoDictionary["url_m"] as? String)!)
-                                if let imageData = NSData(contentsOfURL: imageURL!) {
-                                    newPhoto.photoImage = UIImage(data: imageData)
-                                }
+//                                if let imageData = NSData(contentsOfURL: imageURL!) {
+//                                    newPhoto.photoImage = UIImage(data: imageData)
+//                                }
                                 newPhoto.pin = pin
                                 self.listofPhotos.append(newPhoto)
                             }
