@@ -78,6 +78,21 @@ class Photo: NSManagedObject {
     
     // MARK: - Saving images
     
+    func doesItExist() {
+        let path = pathForIdentifier(actualFileName)
+        println("the poster path is \(path) ")
+        let filemgr = NSFileManager.defaultManager()
+        if filemgr.fileExistsAtPath(path) {
+            println("-- **Executing doesItExist and File exists")
+        } else {
+            println("-- **Executing doesItExist and File not found")
+        }
+
+    }
+    
+    
+    // MARK: - Saving images
+    
     func storeImage(image: UIImage?, withIdentifier identifier: String) {
         let path = pathForIdentifier(identifier)
         println("the poster path is \(path) ")

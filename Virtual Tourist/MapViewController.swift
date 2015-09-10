@@ -126,14 +126,17 @@ class MapViewController: UIViewController {
             println("about to add pin at latitude \(locCoord.latitude) longitude \(locCoord.longitude)")
             
             // Create an instance of the Pin class
-            let pinToBeAdded = Pin(latitude: locCoord.latitude, longitude: locCoord.longitude, context: sharedContext)
+            dispatch_async(dispatch_get_main_queue()) {
+                
+                let pinToBeAdded = Pin(latitude: locCoord.latitude, longitude: locCoord.longitude, context: self.sharedContext)
+                // add the new pin to the array of pins
+                self.pins.append(pinToBeAdded)
+                
+                // Finally we save the shared context, using the convenience method in
+                // The CoreDataStackManager
+                CoreDataStackManager.sharedInstance().saveContext()
+            }
             
-            // add the new pin to the array of pins
-            self.pins.append(pinToBeAdded)
-            
-            // Finally we save the shared context, using the convenience method in
-            // The CoreDataStackManager
-            CoreDataStackManager.sharedInstance().saveContext()
             
             
             let annotation = MKPointAnnotation()

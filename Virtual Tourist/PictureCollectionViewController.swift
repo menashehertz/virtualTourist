@@ -75,8 +75,10 @@ class PictureCollectionViewController: UIViewController, UICollectionViewDataSou
             pinPhoto.pin = nil
             //collectionView.deleteItemsAtIndexPaths([indexPath])
             pinPhoto.deleteImage()
-            sharedContext.deleteObject(pinPhoto)
-            CoreDataStackManager.sharedInstance().saveContext()
+            dispatch_async(dispatch_get_main_queue()) {
+                self.sharedContext.deleteObject(pinPhoto)
+                CoreDataStackManager.sharedInstance().saveContext()
+            }
         }
         //collectionPic.hidden = false
         Flickr.oneSession.getImageFromFlickr(pin){ (success, errorString) in
@@ -239,7 +241,6 @@ class PictureCollectionViewController: UIViewController, UICollectionViewDataSou
         var img = cell.viewWithTag(2) as! UIImageView
         img.image = UIImage(named: "placeHolder")
 
-        // Here is how to replace the actors array using objectAtIndexPath
         let myPhoto = fetchedResultsController.objectAtIndexPath(indexPath) as! Photo
         
         img.image = myPhoto.photoImage
@@ -248,7 +249,11 @@ class PictureCollectionViewController: UIViewController, UICollectionViewDataSou
         } else {
             println("----- the photo  nil")           
         }
-
+        
+        
+        
+        configureCell(cell, photo: myPhoto)
+        
         return cell
     }
     
@@ -262,9 +267,10 @@ class PictureCollectionViewController: UIViewController, UICollectionViewDataSou
         // myPhoto.pin = nil
         // collectionView.deleteItemsAtIndexPaths([indexPath])
         myPhoto.deleteImage()
-        
-        sharedContext.deleteObject(myPhoto)
-        CoreDataStackManager.sharedInstance().saveContext()
+        dispatch_async(dispatch_get_main_queue()) {
+            self.sharedContext.deleteObject(myPhoto)
+            CoreDataStackManager.sharedInstance().saveContext()
+        }
         
     }
     // MARK: - Fetched Results Controller Delegate
@@ -343,7 +349,18 @@ class PictureCollectionViewController: UIViewController, UICollectionViewDataSou
             }, completion: nil)
     }
     
-    
+    func configureCell(cell: UICollectionViewCell, photo: Photo) {
+        println("Actual file name \(photo.actualFileName)")
+        
+        if photo.photoImage != nil {
+            println("there is a photo")
+        } else {
+            println("The movie has an image name, but it is not downloaded yet")
+        }
+        
+        photo.doesItExist()
+        
+    }
     
     
 }

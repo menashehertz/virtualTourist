@@ -84,17 +84,23 @@ class Flickr {
 //                            println(photoDictionary["title"] as? String)
 //                            println(photoDictionary["url_m"] as? String)
 //                            println(photoDictionary["id"] as? String)
-                            var newPhoto = Photo(photoDictionary: photoDictionary, context: self.sharedContext)
-                            
-                            let imageURL = NSURL(string: (photoDictionary["url_m"] as? String)!)
-                            if let imageData = NSData(contentsOfURL: imageURL!) {
-                                newPhoto.photoImage = UIImage(data: imageData)
+                            dispatch_async(dispatch_get_main_queue()){
+                                
+                                var newPhoto = Photo(photoDictionary: photoDictionary, context: self.sharedContext)
+                                let imageURL = NSURL(string: (photoDictionary["url_m"] as? String)!)
+                                if let imageData = NSData(contentsOfURL: imageURL!) {
+                                    newPhoto.photoImage = UIImage(data: imageData)
+                                }
+                                newPhoto.pin = pin
+                                self.listofPhotos.append(newPhoto)
                             }
-                            newPhoto.pin = pin
-                            self.listofPhotos.append(newPhoto)
+                            
                             
                         }
-                        CoreDataStackManager.sharedInstance().saveContext()
+                        dispatch_async(dispatch_get_main_queue()){
+                            CoreDataStackManager.sharedInstance().saveContext()
+                        }
+                        println("********** after save context")
                         completionHandler(success: true, errorString: "everything good" )
                         // TODO: - Need to clean up the code
 
