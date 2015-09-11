@@ -358,7 +358,10 @@ class PictureCollectionViewController: UIViewController, UICollectionViewDataSou
         
         if photo.photoImage != nil {
             println("there is a photo")
-            img.image = photo.photoImage
+            dispatch_async(dispatch_get_main_queue()) {
+                img.image = photo.photoImage
+            }
+            
         } else {
             println("The movie has an image name, but it is not downloaded yet")
             let sessionConfig = NSURLSessionConfiguration.defaultSessionConfiguration()
@@ -373,8 +376,9 @@ class PictureCollectionViewController: UIViewController, UICollectionViewDataSou
                         if response.statusCode == 200 {
 
                             let photoImage = UIImage(data: data)
-                            img.image = photoImage
+                            
                             dispatch_async(dispatch_get_main_queue()) {
+                                img.image = photoImage
                                 photo.photoImage = photoImage
                             }
                          }
